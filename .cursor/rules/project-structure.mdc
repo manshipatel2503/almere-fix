@@ -1,0 +1,29 @@
+---
+description: Enforced folder structure for AlmereFix
+alwaysApply: true
+---
+
+# Project Structure
+
+All source code lives under `src/`. Follow this layout strictly.
+
+```
+src/
+├── app/                          # Next.js App Router (pages & layouts only)
+├── components/
+│   ├── ui/                       # Small, reusable "dumb" components (Button, Input, Badge)
+│   └── features/                 # Complex "smart" components (WorkerMap, BookingModal)
+├── hooks/                        # Custom React hooks (useGeolocation, useSupabaseAuth)
+├── services/                     # Pure logic for external APIs (supabaseClient, googleMapsService)
+├── types/                        # TypeScript interfaces and types
+└── middleware.ts
+```
+
+## Rules
+
+- **`components/ui/`** — stateless or minimal-state presentational components. No API calls.
+- **`components/features/`** — composed components that wire hooks + ui together. May subscribe to data.
+- **`hooks/`** — any reusable `useState`/`useEffect` logic extracted from components.
+- **`services/`** — framework-agnostic modules that talk to Supabase, Google Maps, etc. No React imports.
+- **`types/`** — shared TypeScript types/interfaces. One file per domain (`database.ts`, `maps.ts`).
+- **`app/`** — route pages and layouts only. Keep page files thin; delegate to `components/features/`.

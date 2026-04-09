@@ -1,0 +1,28 @@
+---
+description: Next.js App Router patterns for AlmereFix
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Next.js Patterns
+
+## Route Structure
+```
+src/app/
+  (auth)/login/page.tsx
+  (auth)/register/page.tsx
+  (customer)/map/page.tsx
+  (worker)/dashboard/page.tsx
+  api/...route handlers
+  layout.tsx
+  page.tsx
+```
+
+## Data Fetching
+- Server Components fetch data via `@/services/supabaseServer`.
+- Client Components use `@/services/supabaseClient` for real-time subscriptions.
+
+## Environment Variables
+- `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon key.
+- `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` — Google Maps API key.

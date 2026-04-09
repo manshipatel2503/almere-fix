@@ -1,0 +1,25 @@
+---
+description: Core project overview, goals, and tech stack for AlmereFix
+alwaysApply: true
+---
+
+# AlmereFix — Uber for Plumbers
+
+## Vision
+A real-time "Schedule-First" local service app for the Netherlands. Unlike Werkspot (bidding-based), AlmereFix focuses on instant, map-based availability for emergency and micro-jobs.
+
+## Strategy: The Almere Pilot
+- **Scope:** Hyper-localized to Almere, Flevoland, NL.
+- **Reasoning:** High growth, new-build housing, physical proximity for GPS testing.
+- **Scaling:** Architecture scales to all of NL using PostGIS spatial queries.
+
+## Tech Stack
+- **Frontend:** Next.js (App Router), Tailwind CSS, Lucide Icons.
+- **Backend/DB:** Supabase (PostgreSQL + PostGIS).
+- **Real-time:** Supabase Realtime (live map markers).
+- **Maps:** Google Maps Platform (Javascript SDK).
+- **AI Integration:** Model Context Protocol (MCP).
+
+## User Roles
+1. **Worker (Service Provider):** Toggle 'Online', broadcast GPS in real-time.
+2. **Customer:** Find nearby pros on a live map with specialized icons.

@@ -1,0 +1,52 @@
+---
+description: Rules for React/Next.js code quality and performance
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Coding Standards
+
+## Component Size
+No component file should exceed **150 lines**. Split into sub-components when it does.
+
+## Logic Separation
+Extract any logic involving `useEffect` or complex `useState` into a custom hook in `src/hooks/`.
+
+```tsx
+// BAD — logic mixed into component
+function WorkerMap() {
+  const [pos, setPos] = useState(null);
+  useEffect(() => { navigator.geolocation.watchPosition(p => setPos(p)) }, []);
+  return <Map center={pos} />;
+}
+
+// GOOD — logic in a hook
+function WorkerMap() {
+  const pos = useGeolocation();
+  return <Map center={pos} />;
+}
+```
+
+## Performance
+- Use `React.memo` for expensive map-marker components.
+- Use `next/dynamic` for the Google Maps library to reduce initial bundle size.
+
+## Naming
+- Components: **PascalCase** (`ServiceBadge.tsx`).
+- Hooks: start with **`use`** (`useGeolocation.ts`).
+- Services: **camelCase** (`supabaseClient.ts`).
+
+## Typing
+- **No `any`** — use strict TypeScript interfaces from `src/types/`.
+- All component props must have an explicit interface.
+
+```tsx
+// BAD
+function Card({ data }: any) { ... }
+
+// GOOD
+interface WorkerCardProps {
+  worker: NearbyWorker;
+}
+function WorkerCard({ worker }: WorkerCardProps) { ... }
+```
