@@ -4,12 +4,35 @@ import { useState } from "react";
 import Link from "next/link";
 import { Wrench, Mail, Lock, User, ArrowRight } from "lucide-react";
 import type { UserRole } from "@/types/database";
+import { supabase } from "@/services/supabaseClient";
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<UserRole>("customer");
+  const router = useRouter();
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+          role,
+        },
+      },
+    });
+    if (error) {
+      // TODO: Show error message to user
+      console.error(error);
+    } else {  
+      // TODO: Send verification email message
+      router.push("/login");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
@@ -42,10 +65,7 @@ export default function RegisterPage() {
           </div>
 
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              // TODO: Supabase auth signup
-            }}
+            onSubmit={(e) => handleSubmit(e)}
             className="space-y-5"
           >
             <div>

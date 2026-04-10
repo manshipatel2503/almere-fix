@@ -50,3 +50,72 @@ interface WorkerCardProps {
 }
 function WorkerCard({ worker }: WorkerCardProps) { ... }
 ```
+
+## Folder Structure
+- `/src/constants/` → static values, UI mappings, config (NO API calls, no side effects)
+- `/src/services/` → API calls, Supabase clients, external integrations (NO React imports)
+- `/src/components/ui/` → small, reusable "dumb" components (Button, Input, Badge)
+- `/src/components/features/` → complex "smart" components (WorkerMap, BookingModal)
+- `/src/hooks/` → custom React hooks (useGeolocation, useSupabaseAuth)
+- `/src/types/` → shared TypeScript interfaces
+
+## Next.js Rules
+- Prefer Server Components by default
+- Use "use client" only when necessary
+- Keep data fetching on the server when possible
+
+## Data Fetching
+- Use server-side fetching via `@/services/supabaseServer` when possible
+- Use `@/services/supabaseClient` for client-side realtime subscriptions
+- Always handle loading and error states
+
+## State Management
+- useState → local UI state
+- useContext → global lightweight state
+- Avoid unnecessary global state
+
+## Error Handling
+- Never swallow errors silently
+- Use error boundaries for UI crashes
+- Log errors to console in development; add monitoring (Sentry) before production
+
+## Accessibility
+- Use semantic HTML
+- Always include alt text for images
+- Ensure keyboard navigation works
+
+## Testing
+- Write unit tests for hooks and services
+- Write component tests for interactive UI
+- Testing framework TBD (add when needed)
+
+## Tooling
+- ESLint (with Next.js config)
+- Prettier for formatting
+- Strict TypeScript mode enabled
+
+## Constants Management
+- Avoid magic numbers and hardcoded values inside components
+- Extract reusable constants into `/src/constants/`
+- Keep feature-specific constants close to the feature (e.g. `constants/map.ts`)
+- Allow small, obvious constants inside a file (e.g. `const MAX_RETRIES = 3`)
+
+## SOLID Principles (Applied to React/Next.js)
+
+### Single Responsibility Principle (SRP)
+- Each component should have one responsibility
+- Separate UI, logic (hooks), and data fetching
+
+### Open/Closed Principle (OCP)
+- Components should be extendable via props, not modified directly
+
+### Liskov Substitution Principle (LSP)
+- Shared components should behave consistently when reused
+
+### Interface Segregation Principle (ISP)
+- Avoid large prop interfaces
+- Keep props minimal and specific
+
+### Dependency Inversion Principle (DIP)
+- Do not tightly couple components to APIs or services
+- Use service layers (`/services/`) for external interactions

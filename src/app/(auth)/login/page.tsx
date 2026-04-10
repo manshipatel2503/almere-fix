@@ -3,10 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Wrench, Mail, Lock, ArrowRight } from "lucide-react";
+import { supabase } from "@/services/supabaseClient";
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) {
+      // TODO: Show error message to user
+      console.error(error);
+    } else {
+      // TODO: Show success message to user
+      router.push("/");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -21,10 +39,7 @@ export default function LoginPage() {
 
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              // TODO: Supabase auth
-            }}
+            onSubmit={(e) => handleSubmit(e)}
             className="space-y-5"
           >
             <div>

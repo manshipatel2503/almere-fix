@@ -13,17 +13,19 @@ src/
 ├── components/
 │   ├── ui/                       # Small, reusable "dumb" components (Button, Input, Badge)
 │   └── features/                 # Complex "smart" components (WorkerMap, BookingModal)
+├── constants/                    # Static values, UI mappings, config (NO API calls)
 ├── hooks/                        # Custom React hooks (useGeolocation, useSupabaseAuth)
-├── services/                     # Pure logic for external APIs (supabaseClient, googleMapsService)
+├── services/                     # API calls, Supabase clients, external integrations
 ├── types/                        # TypeScript interfaces and types
 └── middleware.ts
 ```
 
 ## Rules
 
+- **`constants/`** — static config, UI mappings, magic numbers. No API calls, no side effects.
+- **`services/`** — all Supabase/API calls and external integrations. No React imports, no UI logic.
 - **`components/ui/`** — stateless or minimal-state presentational components. No API calls.
 - **`components/features/`** — composed components that wire hooks + ui together. May subscribe to data.
 - **`hooks/`** — any reusable `useState`/`useEffect` logic extracted from components.
-- **`services/`** — framework-agnostic modules that talk to Supabase, Google Maps, etc. No React imports.
 - **`types/`** — shared TypeScript types/interfaces. One file per domain (`database.ts`, `maps.ts`).
 - **`app/`** — route pages and layouts only. Keep page files thin; delegate to `components/features/`.
